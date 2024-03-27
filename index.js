@@ -1,8 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import productRoutes from "./routes/product.route.js";
-import Product from "./models/product.model.js";
-
+import "dotenv/config";
 const app = express();
 
 // Middlewares
@@ -17,12 +16,10 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoutes);
 
 mongoose
-  .connect(
-    "mongodb+srv://suraj:suraj@backenddbintegration.l3aoclo.mongodb.net/Node-API"
-  )
+  .connect(process.env.DB_URL)
   .then(() => {
     console.log("Connected to MongoDB database");
-    app.listen(3000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Listening on port 3000...");
     });
   })
